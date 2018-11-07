@@ -5,6 +5,9 @@ Raspberry Pi sends an email to the master whenever any person tries to enter the
 The entrance is opened or remain closed according to the subject of the master's reply email.
 The date,time and if the person is intruder or not is sent to the firebase and showed in a android app.
 
+### Link for Android App 
+Link https://github.com/arghasen10/IDS_Hackathon
+
 ## Android App Screenshot
 ![Alt text](https://github.com/arghasen10/IDS_Hackathon/blob/master/Screenshot_20181106-161546.jpeg   "App Screenshot")
 
