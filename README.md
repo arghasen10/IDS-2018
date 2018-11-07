@@ -8,9 +8,9 @@ The date,time and if the person is intruder or not is sent to the firebase and s
 ## Android App Screenshot
 ![Alt text](https://github.com/arghasen10/IDS_Hackathon/blob/master/Screenshot_20181106-161546.jpeg   "App Screenshot")
 
-Team : **Pi Hackers**
+##Team : **Pi Hackers**
 
-Members:
+###Members:
 
 [**Mayukh Majhi**](https://github.com/mmajhi)
 
