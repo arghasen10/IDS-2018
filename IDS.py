@@ -34,12 +34,13 @@ def main():
     # set GPIO Pins
     pinTrigger = 23
     pinEcho = 24
-    
+    buzzer = 13
 
     # set GPIO input and output channels
     GPIO.setup(pinTrigger, GPIO.OUT)
     GPIO.setup(pinEcho, GPIO.IN)
     GPIO.setup(18,GPIO.OUT)
+    GPIO.setup(13,GPIO.OUT)
     num = 0
 
     while True:
@@ -83,12 +84,17 @@ def main():
 ##                GPIO.output(yellow, False)
 ##                GPIO.output(green, True)
                 pwm=GPIO.PWM(18,50)
-                pwm.start(7.5)
+                pwm.start(3.5)
                 time.sleep(10)
                 pwm.ChangeDutyCycle(12.5)
                 time.sleep(1)
                 pwm.stop()
-                #GPIO.cleanup()
+            else:
+                GPIO.output(buzzer,GPIO.HIGH)
+                time.sleep(5)
+                GPIO.output(buzzer,GPIO.LOW)
+                print("Buzzer off")
+                time.sleep(1)
             post_to_firebase(res)
 
     GPIO.setwarnings(False)

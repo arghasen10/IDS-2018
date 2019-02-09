@@ -8,6 +8,7 @@ from email import encoders
 def sendMail(num):
     send_from = "arghaberry@gmail.com"
     send_to = "mayukhmajhi@gmail.com"
+#    send_to = "arghasen10@gmail.com"
     text = "Intruder detected"
     subject = 'Home Surveillance'
 
