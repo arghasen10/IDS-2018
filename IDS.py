@@ -1,46 +1,32 @@
 import RPi.GPIO as GPIO
+import os
 from datetime import datetime
 import time
-import picamera
+
 import Email
-from firebase import firebase
+
 
 GPIO.setmode(GPIO.BCM)
 
 # Shooting Video and capturing image from the Pi camera
 def picamerause(num):
-    camera = picamera.PiCamera()
-    camera.capture('image' + str(num) + '.jpg')
+    string = 'fswebcam -p YUYV -d /dev/video0 -r 640x480 '
+    string += 'image'+str(num)+'.jpg'
+    os.system(string)
     time.sleep(1)
-    camera.start_recording('video' + str(num) + '.h264')
-    time.sleep(5)
-    camera.stop_recording()
-    time.sleep(1)
-    camera.capture('image' + str(num) + '_2.jpg')
-    camera.close()
-
-def post_to_firebase(flag):
     
 
-    res = ["Yes", "No"]
-    fire = firebase.FirebaseApplication('https://fir-app-b50e6.firebaseio.com/')
-    dt = datetime.now()
-    date = dt.strftime('%d-%b-%Y')
-    time = dt.strftime('%I:%M %p')
-    result = fire.post(url='https://fir-app-b50e6.firebaseio.com/',data='{}\t\t\t\t{}\t\t\t\t\t\t\t\t\t\t{}'.format(date,time,res[flag]))
 
 def main():
     # use Raspberry Pi board pin numbers
     # set GPIO Pins
     pinTrigger = 23
     pinEcho = 24
-    buzzer = 13
-
+    servo = 18
     # set GPIO input and output channels
     GPIO.setup(pinTrigger, GPIO.OUT)
     GPIO.setup(pinEcho, GPIO.IN)
-    GPIO.setup(18,GPIO.OUT)
-    GPIO.setup(13,GPIO.OUT)
+    GPIO.setup(servo,GPIO.OUT)
     num = 0
 
     while True:
@@ -70,7 +56,7 @@ def main():
         distance = (TimeElapsed * 34300) / 2
 
         print("Distance: %.1f cm" % distance)
-        if (distance <= 60):
+        if (distance <= 30):
             num += 1
             print('Capturing video and Photo of Intruder...')
             #TODO 
@@ -83,20 +69,16 @@ def main():
 ##                GPIO.output(red, False)
 ##                GPIO.output(yellow, False)
 ##                GPIO.output(green, True)
-                pwm=GPIO.PWM(18,50)
-                pwm.start(3.5)
-                time.sleep(10)
-                pwm.ChangeDutyCycle(12.5)
+                pwm=GPIO.PWM(18,150)
+                pwm.start(20)
+                time.sleep(3)
+                pwm.ChangeDutyCycle(0.15)
                 time.sleep(1)
                 pwm.stop()
+                print('Open Door')
             else:
-                GPIO.output(buzzer,GPIO.HIGH)
-                time.sleep(5)
-                GPIO.output(buzzer,GPIO.LOW)
-                print("Buzzer off")
-                time.sleep(1)
-            post_to_firebase(res)
-
+                print('Close Door')
+            
     GPIO.setwarnings(False)
     GPIO.cleanup()
 
